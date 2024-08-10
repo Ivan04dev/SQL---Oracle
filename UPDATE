@@ -1,0 +1,3 @@
+UPDATE atc_usuarios
+SET npmbre = 'nuevo nombre'
+WHERE id = id;
