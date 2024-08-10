@@ -1,0 +1,9 @@
+-- Finalice con usu
+SELECT * FROM VTAS_USUARIOS WHERE USUARIO LIKE '%usu';
+
+-- Comience con usu
+SELECT * FROM VTAS_USUARIOS WHERE USUARIO LIKE 'usu%';
+
+-- Contenga con usu
+SELECT * FROM VTAS_USUARIOS WHERE USUARIO LIKE '%usu%';
+
