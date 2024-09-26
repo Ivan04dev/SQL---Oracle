@@ -14,3 +14,24 @@ ADD (
 -- Elimina una columna
 ALTER TABLE GC_USUARIOS DROP COLUMN TIPO_USUARIO;
 
+########################################################################################
+
+-- Para modificar el tipo de dato de la columna DESCRIPCION
+
+-- Agregar una columna temporal
+
+ALTER TABLE PROCESOS ADD DESCRIPCION_TEMP VARCHAR2(255);
+
+-- Mover los datos de la columna original a la nueva
+
+UPDATE PROCESOS SET DESCRIPCION_TEMP = SUBSTR(DESCRIPCION, 1, 255);
+
+-- Se elimina la columna original
+
+ALTER TABLE PROCESOS DROP COLUMN DESCRIPCION;
+
+-- Se renombra la columna nueva con el nombre de la anterior
+
+ALTER TABLE PROCESOS RENAME COLUMN DESCRIPCION_TEMP TO DESCRIPCION;
+
+
