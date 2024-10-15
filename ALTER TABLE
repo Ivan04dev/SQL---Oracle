@@ -1,5 +1,5 @@
 -- Agregar la columna PUESTO
-ALTER TABLE usuarios ADD PUESTO VARCHAR2(25);
+ALTER TABLE usuarios ADD PUESTO VARCHAR2(255);
 
 -- Modificar la longitud de la columna CONTRASENIA
 ALTER TABLE usuarios MODIFY CONTRASENIA VARCHAR2(100);
