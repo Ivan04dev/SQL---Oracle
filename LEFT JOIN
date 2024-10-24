@@ -1,0 +1,4 @@
+SELECT *
+FROM MVNO_ATC_CARGAS c
+LEFT JOIN MVNO_ATC_EQUIPOS e
+ON c.idequipo = e.id;
