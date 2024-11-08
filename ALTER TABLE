@@ -34,4 +34,11 @@ ALTER TABLE PROCESOS DROP COLUMN DESCRIPCION;
 
 ALTER TABLE PROCESOS RENAME COLUMN DESCRIPCION_TEMP TO DESCRIPCION;
 
+#################################################################################################
+
+-- Modifica el tipo de datos de DATE a TIMESTAMP
+
+ALTER TABLE tareas
+MODIFY (FECHAESTIMADA TIMESTAMP,
+FECHACIERRE TIMESTAMP);
 
