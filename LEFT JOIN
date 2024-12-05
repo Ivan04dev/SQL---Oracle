@@ -2,3 +2,12 @@ SELECT *
 FROM MVNO_ATC_CARGAS c
 LEFT JOIN MVNO_ATC_EQUIPOS e
 ON c.idequipo = e.id;
+
+Ejemplo dos de JOIN
+
+-- Se compara por el campo sucursal en CP_USROS Y CP_SUCURSAL para obtener los datos de dos usuarios
+
+SELECT * FROM CP_USROS u
+LEFT JOIN CP_SUCURSAL s
+ON u.sucursal = s.sucursal
+WHERE usuario IN ('yordaz', 'jmlopezac');
