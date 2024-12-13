@@ -1,0 +1,42 @@
+const generarTablaGerentes = (contenedor, datosGerentes) => {
+    contenedor.innerHTML = '';
+
+    // Crear la tabla
+    const tabla = document.createElement('table');
+    tabla.className = 'table table-striped table-bordered';
+
+    // Crear la cabecera
+    const cabecera = document.createElement('thead');
+    cabecera.className = 'table-dark';
+    cabecera.innerHTML = `
+        <tr>
+            <th>Gerente</th>
+            <th>Leídos</th>
+            <th>Pendientes</th>
+            <th>Total</th>
+        </tr>
+    `;
+    tabla.appendChild(cabecera);
+
+    // Crear el cuerpo
+    const cuerpo = document.createElement('tbody');
+
+    // Generar una fila por cada gerente en el arreglo
+    datosGerentes.forEach(({ gerente, leidos, pendientes, totalEjecutivos }) => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${gerente}</td>
+            <td class='text-center'>${leidos}</td>
+            <td class='text-center'>${pendientes}</td>
+            <td class='text-center'>${totalEjecutivos}</td>
+        `;
+        cuerpo.appendChild(fila);
+    });
+
+    tabla.appendChild(cuerpo);
+
+    // Insertar la tabla en el contenedor
+    contenedor.appendChild(tabla);
+};
+
+generarTablaGerentes(contenedor, datosGerentes);
