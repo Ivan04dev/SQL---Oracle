@@ -1,0 +1,50 @@
+const generarTablaRegionesPT = (contenedor, regiones, leidos, totales) => {
+            contenedor.innerHTML = '';
+         
+            // Crear la tabla
+            const tabla = document.createElement('table');
+            tabla.className = 'table table-striped table-bordered';
+         
+            // Crear la cabecera
+            const cabecera = document.createElement('thead');
+            cabecera.className = 'table-dark';
+            cabecera.innerHTML = `
+                <tr>
+                <th class="text-center">% Lectura</th>
+                </tr>
+            `;
+            tabla.appendChild(cabecera);
+         
+            // Crear el cuerpo
+            const cuerpo = document.createElement('tbody');
+         
+            // Generar filas dinámicamente
+            regiones.forEach((region, index) => {
+                // Cálculo del porcentaje
+                const porcentaje = Math.round((leidos[index] / totales[index]) * 100);
+         
+                // Crear una fila
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td class="text-center">${porcentaje}%</td>
+                `;
+         
+                // Aplicar estilos según el porcentaje
+                if (porcentaje <= 79) {
+                    fila.className = 'text-light bg-danger';
+                } else if (porcentaje >= 80 && porcentaje <= 89) {
+                    fila.className = 'text-light bg-warning';
+                } else {
+                    fila.className = 'text-light bg-success';
+                }
+         
+                // Agregar la fila al cuerpo de la tabla
+                cuerpo.appendChild(fila);
+            });
+         
+            // Agregar el cuerpo a la tabla
+            tabla.appendChild(cuerpo);
+         
+            // Insertar la tabla en el contenedor
+            contenedor.appendChild(tabla);
+        };
