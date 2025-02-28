@@ -1,1 +1,10 @@
+mysql -u root -p
 
+-- Modificar el nombre de una columna
+Para MySQL 8.0+
+
+ALTER TABLE empleados RENAME COLUMN Id TO id;
+
+-- Alternativa para versiones antiguas de MySQL
+
+ALTER TABLE empleados CHANGE COLUMN Id id INT NOT NULL;
