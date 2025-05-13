@@ -1,3 +1,11 @@
 Fórmula excel para extraer los datos y convertirlos a SQL
 
-="INSERT INTO PYMES_CLIENTES (REGION, CUENTAORIGEN, ESTADO, INGRESO) VALUES ('" & C3 & "', '" & D3 & "', '" & E3 & "', " & F3 & ");"
+="INSERT INTO PYMES_CLIENTES (REGION, CLIENTE, CUENTAORIGEN, INGRESO, ESTADO, ESTATUS_CUENTA) 
+VALUES ('" & C3 & "', '" & D3 & "', '" & E3 & "', " & I3 & ", '" & G3 & "', " & F3 & ");"
+
+C3 => REGION
+D3 => CLIENTE
+E3 => CUENTAORIGEN
+I3 => INGRESO (Formateado para 2 decimales)
+G3 => ESTADO
+F3 => ESTATUS_CUENTA
