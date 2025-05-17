@@ -19,3 +19,34 @@ Contraseña: (la que pusiste)
 Host: localhost
 Puerto: 1521
 SID/Servicio: XEPDB1
+
+===================================================================================
+
+-- Ejemplo de tabla
+
+CREATE TABLE ATC_STAFF_DEV (
+ID NUMBER PRIMARY KEY,
+NOMBRE VARCHAR(30),
+APPATERNO VARCHAR(25),
+APMATERNO VARCHAR(25),
+USUARIORED VARCHAR2(20),
+PUESTO VARCHAR2(30),
+NIVEL VARCHAR2(2),
+AREA VARCHAR2(20),
+ESTATUS VARCHAR2(20)
+);
+
+DESC ATC_STAFF_DEV;
+
+CREATE SEQUENCE seq_staff_id START WITH 1 INCREMENT BY 1;
+
+-- Columna adicional para el trigger
+ALTER TABLE ATC_STAFF_DEV ADD ULTIMASESION TIMESTAMP(6);
+
+CREATE OR REPLACE TRIGGER trg_ultima_sesion_update
+BEFORE UPDATE ON ATC_STAFF_DEV
+FOR EACH ROW
+BEGIN
+  :NEW.ULTIMASESION := SYSTIMESTAMP;
+END;
+/
