@@ -4,6 +4,7 @@ Ruta de instalación recomendada: C:\oracle\product\21c\
 Siguiente y aceptar
 
 -- Comprobar instalación
+Abrir CDM como Administrador
 sqlplus system@localhost/XEPDB1
 
 -- Crear un usuario para Oracle SQL (opcional)
