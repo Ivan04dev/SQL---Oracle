@@ -34,3 +34,21 @@ ALTER TRIGGER PROCESOS_CX_TRG ENABLE;
 SELECT trigger_name, status
 FROM user_triggers
 WHERE trigger_name = 'PROCESOS_CX_TRG';
+
+-- Nuevo trigger
+CREATE OR REPLACE TRIGGER trg_procesos_cx_fechas
+BEFORE INSERT ON PROCESOS_CX
+FOR EACH ROW
+BEGIN
+  -- Si no viene fecha de creación, se asigna la actual
+  IF :NEW.FECHACREADO IS NULL THEN
+    :NEW.FECHACREADO := SYSTIMESTAMP;
+  END IF;
+
+  -- También llenamos FECHAMODIFICA con la misma fecha al crear
+  IF :NEW.FECHAMODIFICA IS NULL THEN
+    :NEW.FECHAMODIFICA := SYSTIMESTAMP;
+  END IF;
+END;
+/
+
