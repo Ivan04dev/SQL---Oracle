@@ -47,3 +47,10 @@ ALTER TABLE tareas
 MODIFY (FECHAESTIMADA TIMESTAMP,
 FECHACIERRE TIMESTAMP);
 
+#####################################################################################################
+
+-- Inserción manual en campo tipo TIMESTAMP
+
+TO_TIMESTAMP('2025-08-01 12:05:28.000000000', 'YYYY-MM-DD HH24:MI:SS.FF')
+
+UPDATE atc_videos_capacitacion SET FECHA = TO_TIMESTAMP('2025-08-01 12:05:28.000000000', 'YYYY-MM-DD HH24:MI:SS.FF') WHERE ID = 2;
