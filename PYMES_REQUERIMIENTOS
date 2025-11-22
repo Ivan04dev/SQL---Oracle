@@ -1,0 +1,59 @@
+-- Crea la tabla
+CREATE TABLE PYMES_REQUERIMIENTOS
+   ("ID" NUMBER, 
+   "IDCLIENTE" NUMBER,
+	"FECHACREADO" TIMESTAMP (6), 
+	"INCONVENIENTE"               VARCHAR2(30),   
+    "TIPOINCONVENIENTE"           VARCHAR2(50),   
+    "COMENTARIOS"                 VARCHAR2(1001), 
+    "USUARIOCREADOR"              VARCHAR2(20),   
+    "USUARIOASIGNADO"             VARCHAR2(20),   
+    "FECHAMODIFICADO"             TIMESTAMP(6), 
+    "AREARESPONSABLE"             VARCHAR2(20),   
+    "ARCHIVO"                     VARCHAR2(50),   
+    "FOLIO"                       VARCHAR2(13),   
+    "ESTATUS"                     VARCHAR2(20),   
+    "NOMBRECONTACTO"              VARCHAR2(50),   
+    "TELEFONOCONTACTO"            VARCHAR2(11),   
+    "CORREOCONTACTO"              VARCHAR2(50),   
+    "SOLUCION"                    VARCHAR2(2500), 
+    "ARCHIVOBO"                   VARCHAR2(50),   
+    "FECHAESCALAMIENTO"           TIMESTAMP(6),   
+    "FECHAVISITA"                 DATE,           
+    "CONTADORESCALAMIENTO"        NUMBER,         
+    "FECHAENSEGUIMIENTO"          TIMESTAMP(6),   
+    "FECHAESCALADO"               TIMESTAMP(6),   
+    "FECHACIERRE"                 TIMESTAMP(6),   
+    "RETENIDO"                    VARCHAR2(2),    
+    "MOTIVOCANCELACION"           VARCHAR2(50)
+   );
+
+-- Crea la secuencia
+CREATE SEQUENCE PYMES_REQUERIMIENTOS_SEQ1
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- Modifica la secuencia
+ALTER TABLE PYMES_REQUERIMIENTOS MODIFY ID NUMBER;
+
+CREATE OR REPLACE EDITIONABLE TRIGGER PYMES_REQUERIMIENTOS_TRG
+BEFORE INSERT ON PYMES_REQUERIMIENTOS 
+FOR EACH ROW 
+BEGIN
+  IF INSERTING AND :NEW.ID IS NULL THEN
+    SELECT PYMES_REQUERIMIENTOS_SEQ1.NEXTVAL INTO :NEW.ID FROM SYS.DUAL;
+  END IF;
+END;
+/
+
+-- Activa la secuencia
+ALTER TRIGGER PYMES_REQUERIMIENTOS_TRG ENABLE;
+
+-- Verifica que esxista
+SELECT trigger_name, status
+FROM user_triggers
+WHERE trigger_name = 'PYMES_REQUERIMIENTOS_TRG';
+
+
