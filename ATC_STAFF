@@ -1,0 +1,57 @@
+CREATE TABLE ATC_STAFF(
+"ID"                       VARCHAR2(20), 
+"NUMEMPLEADO"              VARCHAR2(15), 
+"NOMBRE"                   VARCHAR2(30), 
+"APPATERNO"                VARCHAR2(25), 
+"APMATERNO"               VARCHAR2(25), 
+"CORREO"                   VARCHAR2(40), 
+"SUCURSAL"                 VARCHAR2(50), 
+"PUESTO"                   VARCHAR2(30), 
+"USUARIORED"               VARCHAR2(20), 
+"ULTIMASESION"             TIMESTAMP(6), 
+"CONTRASENIA"              VARCHAR2(20), 
+"FECHAINGRESO"             DATE,         
+"USUARIOMODIFICA"          VARCHAR2(20), 
+"FECHAMODIFICACION"        TIMESTAMP(6), 
+"ESTADO"                   VARCHAR2(20), 
+"NIVEL"                    VARCHAR2(2),  
+"RFC"                      VARCHAR2(20), 
+"FECHANACIMIENTO"          VARCHAR2(5),  
+"IDSIEBEL"                 VARCHAR2(20), 
+"IDSIEBEL2"                VARCHAR2(20), 
+"PERFILSIEBEL"             VARCHAR2(40), 
+"SISTEMACOBRO"             VARCHAR2(50), 
+"NOMBRESIEBEL"             VARCHAR2(60), 
+"NUMEROPLAZA"              VARCHAR2(20), 
+"NOMINERA"                 VARCHAR2(60), 
+"AREA"                     VARCHAR2(20), 
+"GENERO"                   VARCHAR2(10), 
+"USUARIOREDII"             VARCHAR2(20), 
+"TELEFONO"                 VARCHAR2(10)
+ );
+ 
+ -- Crea la secuencia
+CREATE SEQUENCE ATC_STAFF_SEQ
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+
+CREATE OR REPLACE EDITIONABLE TRIGGER ATC_STAFF_TRG
+BEFORE INSERT ON ATC_STAFF
+FOR EACH ROW 
+BEGIN
+  IF INSERTING AND :NEW.ID IS NULL THEN
+    SELECT ATC_STAFF_SEQ.NEXTVAL INTO :NEW.ID FROM SYS.DUAL;
+  END IF;
+END;
+/
+
+-- Activa la secuencia
+ALTER TRIGGER ATC_STAFF_TRG ENABLE;
+
+-- Verifica que esxista
+SELECT trigger_name, status
+FROM user_triggers
+WHERE trigger_name = 'ATC_STAFF_TRG';
