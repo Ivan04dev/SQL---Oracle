@@ -1,0 +1,19 @@
+1️⃣ Abre Símbolo del sistema (CMD)
+
+👉 Ejecutar como administrador
+
+2️⃣ Conéctate sin contraseña
+
+sqlplus / as sysdba
+
+✔ Si entra, verás algo como:
+
+Connected to:
+Oracle Database 19c ...
+
+3️⃣ Desbloquea o cambia la contraseña
+
+ALTER USER TU_USUARIO ACCOUNT UNLOCK;
+ALTER USER TU_USUARIO IDENTIFIED BY NuevaPassword123;
+
+Prueba luego en SQL Developer.
