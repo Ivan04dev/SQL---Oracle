@@ -1,0 +1,71 @@
+--DESC atc_staff_hist_estados;
+--SELECT * FROM atc_staff_hist_estados;
+--SELECT * FROM atc_staff_pruebas_ii;
+
+-- Obtener los triggers de una tabla
+SELECT TRIGGER_NAME, STATUS
+FROM USER_TRIGGERS
+WHERE TABLE_NAME = 'ATC_STAFF_PRUEBAS_II';
+ 
+ -- Obtener el código del trigger
+SELECT DBMS_METADATA.GET_DDL('TRIGGER','TRG_STAFF_ESTADOS')
+FROM DUAL;
+
+-- Renombrar el trigger
+ALTER TRIGGER TRG_STAFF_ESTADOS RENAME TO TRG_STAFF_ESTADOS_PRUEBAS;
+
+-- Crear el trigger en otra tabla 
+CREATE OR REPLACE EDITIONABLE TRIGGER "APLCOBPAG"."TRG_STAFF_ESTADOS" 
+AFTER UPDATE OF ESTADO ON "ATC_STAFF"
+FOR EACH ROW
+BEGIN
+
+    ------------------------------------------------
+    -- CUANDO ENTRA A VACACIONES / INCAPACIDAD
+    ------------------------------------------------
+
+    IF :NEW.ESTADO IN ('Vacaciones','Incapacidad')
+       AND NVL(:OLD.ESTADO,'X') <> :NEW.ESTADO
+    THEN
+
+        INSERT INTO ATC_STAFF_HIST_ESTADOS (
+            USUARIORED,
+            --NUMEMPLEADO,
+            IDSTAFF,
+            ESTADO,
+            FECHA_INICIO,
+            REGISTRADO_POR
+        )
+        VALUES (
+            :NEW.USUARIORED,
+            :NEW.ID,
+            :NEW.ESTADO,
+            SYSDATE,
+            USER
+        );
+
+    END IF;
+
+
+    ------------------------------------------------
+    -- CUANDO REGRESA A ACTIVO
+    ------------------------------------------------
+
+    IF :NEW.ESTADO = 'Activo'
+       AND :OLD.ESTADO IN ('Vacaciones','Incapacidad')
+    THEN
+
+        UPDATE ATC_STAFF_HIST_ESTADOS
+        SET FECHA_FIN = SYSDATE
+        WHERE USUARIORED = :NEW.USUARIORED
+        AND FECHA_FIN IS NULL;
+        -- Nuevo registro con el estado Activo y la fecha_fin
+
+    END IF;
+
+END;
+
+/
+
+-- Activar el trigger
+ALTER TRIGGER "APLCOBPAG"."TRG_STAFF_ESTADOS" ENABLE;
