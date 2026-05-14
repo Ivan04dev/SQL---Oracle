@@ -1,0 +1,95 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+header('Content-Type: application/json');
+
+/*
+echo json_encode([
+    'success' => true,
+    'mensaje' => 'PHP funciona'
+]);
+*/
+
+include('../../server/BD/_config/conexionBD.php');
+
+/*
+echo json_encode(
+    [
+        'success' => true,
+        'mensaje' => 'Include OK'
+    ]
+);
+*/
+
+$conexion = new conexionBD();
+
+if ($conexion) {
+    /*
+    echo json_encode(
+        [
+            'success' => true,
+            'mensaje' => '$conexion OK'
+        ]
+    );
+    */
+}
+
+
+
+$con = $conexion->conectar();
+
+if ($con) {
+    /*
+    echo json_encode(
+        [
+            'success' => true,
+            'mensaje' => '$con OK'
+        ]
+    );
+    */
+}
+
+$usuario = 'GESIDDG';
+
+$sql = "SELECT * FROM TAREAS_PROYECTOS WHERE USUARIO_CREADOR = :usuario";
+
+$stid = oci_parse($con, $sql);
+oci_bind_by_name($stid, ":usuario", $usuario);
+
+if (!oci_execute($stid)) {
+    $e = oci_error($stid);
+
+    echo json_encode([
+        "success" => false,
+        "error" => $e['message']
+    ]);
+
+    exit;
+
+} else {
+    /*
+    echo json_encode([
+        "success" => true,
+        "mensaje" => 'Execute OK'
+    ]);
+    */
+}
+
+$tareas = [];
+
+while($row = oci_fetch_assoc($stid)){
+    $tareas[] = $row;
+}
+
+#var_dump($tareas);
+
+
+
+echo json_encode(
+    [
+        'success' => true,
+        'data' => $tareas
+    ]
+);
